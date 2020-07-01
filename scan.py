@@ -3,7 +3,7 @@
 #-----------------------------------------------------------------------------#
 
 import os
-from time import gmtime, strftime
+from time import localtime, strftime
 
 
 
@@ -15,9 +15,9 @@ from time import gmtime, strftime
 
 SCAN_PATH = "scanReports/"
 
-TIME_STAMP = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
+TIME_STAMP = strftime("%Y-%m-%d_%H:%M:%S", localtime())
 
-CURRENT_SCAN_PATH = SCAN_PATH+"SCAN_"+TIME_STAMP
+CURRENT_SCAN_PATH = SCAN_PATH+"SCAN_"+TIME_STAMP+"/"
 
 
 
@@ -36,7 +36,7 @@ file = None
 file_content = ""
 
 try:
-    file = open('hosts.txt', 'r')
+    file = open("hosts.txt", "r")
     file_content = file.read()
     file_content = file_content.split("\n")
     for line in file_content:
@@ -84,14 +84,21 @@ os.system("rm hosts.txt")
 os.system("echo '\t\t-----SCAN RESULTS-----' > tmp_scan_results.txt")
 
     # scanning
-for i,ip in enumerate(hostsIP):
-    if hostsName[i] != "Unknown":
-        os.system("echo '\n\n---"+hostsName[i]+"' >> tmp_scan_results.txt")
-    else:
-        os.system("echo '\n\n---UNKNOWN' >> tmp_scan_results.txt")
-    os.system("sudo nmap -F "+ip+" >> tmp_scan_results.txt")
+results = []
+for ip in hostsIP:
 
-os.system("echo '\n\n\t\t-----END SCAN RESULTS-----' >> tmp_scan_results.txt")
+    os.system("sudo nmap -F "+ip+" > tmp_scan_results.txt")
+    file = None
+    try:
+        file = open("tmp_scan_results.txt","r")
+        results.append(file.read())
+    finally:
+        if file is not None:
+            file.close()
+
+os.system("rm tmp_scan_results.txt")
+
+
 
 
 
@@ -107,3 +114,39 @@ if not os.path.isdir(SCAN_PATH):
     os.system("mkdir "+SCAN_PATH)
 
 os.system("mkdir "+CURRENT_SCAN_PATH)
+
+
+# writing scan summary
+
+file = None
+try:
+    file = open(CURRENT_SCAN_PATH+"summary.txt","w")
+    file.write("\t\t----- SCAN RESULT SUMMARY -----\n\n\n")
+    file.write("Fast scan : Scans for the 1000 most common ports for each detected device (nmap -F)\n\n")
+    file.write("Scan performed at :"+TIME_STAMP.replace("_"," ")+"\n\n")
+    file.write(str(len(hostsIP))+" hosts detected :\n")
+    for i in range(len(hostsIP)):
+        file.write("\t+ "+hostsIP[i]+" : "+hostsName[i]+"\n")
+    file.write("\n\n\t\t----- END SCAN REPORT -----")
+
+finally:
+    if file is not None:
+       file.close()
+
+
+# writting scan report for each host
+unknown = 1
+for i in range (len(hostsIP)):
+    
+    if hostsName[i] == "Unknown":
+            name = "Unknown_"+str(unknown)
+            unknown += 1
+    else:
+        name = hostsName[i]
+    file = None
+    try:
+        file = open(CURRENT_SCAN_PATH+name,"w")
+        file.write(results[i])
+    finally:
+        if file is not None:
+            file.close()
