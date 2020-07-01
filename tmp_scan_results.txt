@@ -1,0 +1,45 @@
+		-----SCAN RESULTS-----
+
+
+---Asustek Computer
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-01 13:59 CEST
+Nmap scan report for 192.168.0.38
+Host is up (0.0018s latency).
+All 100 scanned ports on 192.168.0.38 are filtered
+MAC Address: 18:31:BF:4C:42:0A (Asustek Computer)
+
+Nmap done: 1 IP address (1 host up) scanned in 3.25 seconds
+
+
+---Freebox SAS
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-01 13:59 CEST
+Nmap scan report for 192.168.0.254
+Host is up (0.0018s latency).
+Not shown: 89 filtered ports
+PORT     STATE  SERVICE
+21/tcp   closed ftp
+53/tcp   open   domain
+80/tcp   open   http
+139/tcp  open   netbios-ssn
+443/tcp  open   https
+445/tcp  open   microsoft-ds
+548/tcp  closed afp
+554/tcp  open   rtsp
+1723/tcp closed pptp
+5000/tcp open   upnp
+6000/tcp closed X11
+MAC Address: 70:FC:8F:3B:AD:6B (Freebox SAS)
+
+Nmap done: 1 IP address (1 host up) scanned in 1.85 seconds
+
+
+---UNKNOWN
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-07-01 13:59 CEST
+Nmap scan report for 192.168.0.36
+Host is up (0.000014s latency).
+All 100 scanned ports on 192.168.0.36 are closed
+
+Nmap done: 1 IP address (1 host up) scanned in 0.13 seconds
+
+
+		-----END SCAN RESULTS-----
