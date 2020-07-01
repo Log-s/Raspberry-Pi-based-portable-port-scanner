@@ -38,6 +38,11 @@ file_content = ""
 try:
     file = open('hosts.txt', 'r')
     file_content = file.read()
+    file_content = file_content.split("\n")
+    for line in file_content:
+        if line == "":
+            file_content.remove(line)
+    file_content = "\n".join(file_content)
 
 finally:
     if file is not None:
@@ -50,7 +55,7 @@ hostsName = []
 
 for i,line in enumerate(file_content.split("\n")):
     
-    if i%3 == 1 and i != len(file_content.split("\n"))-1:
+    if i%3 == 1 and i != len(file_content.split("\n"))-1 and line.split()[-1][0] != "(":
 
         hostsIP.append(line.split()[-1])
 
@@ -58,9 +63,9 @@ for i,line in enumerate(file_content.split("\n")):
             if file_content.split("\n")[i+2].split()[0] == "MAC":
                 hostsName.append(file_content.split("\n")[i+2].split("(")[-1].split(")")[0])
             else:
-                hostsName.append("")
+                hostsName.append("Unknown")
         except:
-            hostsName.append("")
+            hostsName.append("Unknown")
 
 
 # removing hosts.txt file
@@ -80,7 +85,7 @@ os.system("echo '\t\t-----SCAN RESULTS-----' > tmp_scan_results.txt")
 
     # scanning
 for i,ip in enumerate(hostsIP):
-    if hostsName[i] != "":
+    if hostsName[i] != "Unknown":
         os.system("echo '\n\n---"+hostsName[i]+"' >> tmp_scan_results.txt")
     else:
         os.system("echo '\n\n---UNKNOWN' >> tmp_scan_results.txt")
