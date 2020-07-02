@@ -17,7 +17,7 @@ SCAN_PATH = "scanReports/"
 
 TIME_STAMP = strftime("%Y-%m-%d_%H:%M:%S", localtime())
 
-CURRENT_SCAN_PATH = SCAN_PATH+"SCAN_"+TIME_STAMP+"/"
+CURRENT_SCAN_PATH = SCAN_PATH+"FAST_SCAN_"+TIME_STAMP+"/"
 
 
 
@@ -122,7 +122,7 @@ file = None
 try:
     file = open(CURRENT_SCAN_PATH+"summary.txt","w")
     file.write("\t\t----- SCAN RESULT SUMMARY -----\n\n\n")
-    file.write("Fast scan : Scans for the 1000 most common ports for each detected device (nmap -F)\n\n")
+    file.write("Fast scan : Scans for the 100 most common ports for each detected device (nmap -F)\n\n")
     file.write("Scan performed at :"+TIME_STAMP.replace("_"," ")+"\n\n")
     file.write(str(len(hostsIP))+" hosts detected :\n")
     for i in range(len(hostsIP)):
