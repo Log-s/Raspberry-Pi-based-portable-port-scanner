@@ -9,6 +9,7 @@ import ipcalc
 
 
 
+print("[+] Starting script\n") # remove on raspberry implementation
 
 #-----------------------------------------------------------------------------#
 # constants
@@ -32,6 +33,8 @@ NETWORK = str(ipcalc.IP(localIP[0], mask=localIP[1]).guess_network())
 #-----------------------------------------------------------------------------#
 
 # device scan
+print("[+] Starting network scan\n") # remove on raspberry implementation
+
 hosts_scan = os.popen("sudo nmap -sn "+NETWORK).read()
 
 hosts_scan = hosts_scan.split("\n")
@@ -68,8 +71,11 @@ for i,line in enumerate(hosts_scan.split("\n")):
 #-----------------------------------------------------------------------------#
 
 #fast scan
+print("[+] Starting hosts scan") # remove on raspberry implementation
+
 results = []
 for ip in hostsIP:
+    print("\t"+str(len(hostsIP)-len(results))+" hosts left") # to replace with a screen display information on the raspberry
     results.append(os.popen("sudo nmap -F "+ip).read())
 
 
@@ -81,6 +87,7 @@ for ip in hostsIP:
 #-----------------------------------------------------------------------------#
 # writing results
 #-----------------------------------------------------------------------------#
+print("\n[+] Writing results\n") # remove on raspberry implementation
 
 # create folders
 
@@ -124,3 +131,6 @@ for i in range (len(hostsIP)):
     finally:
         if file is not None:
             file.close()
+
+
+print("[+] Script successfully terminated") # remove on raspberry implementation

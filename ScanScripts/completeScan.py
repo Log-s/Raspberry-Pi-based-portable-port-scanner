@@ -9,6 +9,7 @@ import ipcalc
 
 
 
+print("[+] Starting script\n") # remove on raspberry implementation
 
 #-----------------------------------------------------------------------------#
 # constants
@@ -32,28 +33,30 @@ NETWORK = str(ipcalc.IP(localIP[0], mask=localIP[1]).guess_network())
 #-----------------------------------------------------------------------------#
 
 # device scan
-file_content = os.popen("sudo nmap -sn "+NETWORK).read()
+print("[+] Starting network scan\n") # remove on raspberry implementation
 
-file_content = file_content.split("\n")
-for line in file_content:
+hosts_scan = os.popen("sudo nmap -sn "+NETWORK).read()
+
+hosts_scan = hosts_scan.split("\n")
+for line in hosts_scan:
     if line == "":
-        file_content.remove(line)
-file_content = "\n".join(file_content)
+        hosts_scan.remove(line)
+hosts_scan = "\n".join(hosts_scan)
 
 
 #making an ip list
 hostsIP = []
 hostsName = []
 
-for i,line in enumerate(file_content.split("\n")):
+for i,line in enumerate(hosts_scan.split("\n")):
     
-    if i%3 == 1 and i != len(file_content.split("\n"))-1 and line.split()[-1][0] != "(":
+    if i%3 == 1 and i != len(hosts_scan.split("\n"))-1 and line.split()[-1][0] != "(":
 
         hostsIP.append(line.split()[-1])
 
         try :
-            if file_content.split("\n")[i+2].split()[0] == "MAC":
-                hostsName.append(file_content.split("\n")[i+2].split("(")[-1].split(")")[0])
+            if hosts_scan.split("\n")[i+2].split()[0] == "MAC":
+                hostsName.append(hosts_scan.split("\n")[i+2].split("(")[-1].split(")")[0])
             else:
                 hostsName.append("Unknown")
         except:
@@ -68,9 +71,11 @@ for i,line in enumerate(file_content.split("\n")):
 #-----------------------------------------------------------------------------#
 
 #complete scan
+print("[+] Starting hosts scan") # remove on raspberry implementation
 
 results = []
 for ip in hostsIP:
+    print("\t"+str(len(hostsIP)-len(results))+" hosts left") # to replace with a screen display information on the raspberry
     results.append(os.popen("sudo nmap -A -T4 -p- "+ip).read())
 
 
@@ -82,6 +87,7 @@ for ip in hostsIP:
 #-----------------------------------------------------------------------------#
 # writing results
 #-----------------------------------------------------------------------------#
+print("\n[+] Writing results\n") # remove on raspberry implementation
 
 # create folders
 
@@ -125,3 +131,5 @@ for i in range (len(hostsIP)):
     finally:
         if file is not None:
             file.close()
+
+print("[+] Script successfully terminated") # remove on raspberry implementation
