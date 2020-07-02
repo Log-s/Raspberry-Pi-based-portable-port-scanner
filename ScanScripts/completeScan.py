@@ -4,6 +4,7 @@
 
 import os
 from time import localtime, strftime
+import ipcalc
 
 
 
@@ -13,11 +14,14 @@ from time import localtime, strftime
 # constants
 #-----------------------------------------------------------------------------#
 
-SCAN_PATH = "scanReports/"
+SCAN_PATH = "../scanReports/"
 
 TIME_STAMP = strftime("%Y-%m-%d_%H:%M:%S", localtime())
 
-CURRENT_SCAN_PATH = SCAN_PATH+"FAST_SCAN_"+TIME_STAMP+"/"
+CURRENT_SCAN_PATH = SCAN_PATH+"MAX_SCAN_"+TIME_STAMP+"/"
+
+localIP = os.popen("sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*  netmask ([0-9]*\.){3}[0-9]*' | grep -v '127.0.0\.*' | grep -Eo '([0-9]*\.){3}[0-9]*'").read().split("\n")
+NETWORK = str(ipcalc.IP(localIP[0], mask=localIP[1]).guess_network())
 
 
 
@@ -27,26 +31,14 @@ CURRENT_SCAN_PATH = SCAN_PATH+"FAST_SCAN_"+TIME_STAMP+"/"
 # getting device's list
 #-----------------------------------------------------------------------------#
 
-# device scan (saved in a file)
-os.system("sudo nmap -sn 192.168.0.0/24 > hosts.txt")
+# device scan
+file_content = os.popen("sudo nmap -sn "+NETWORK).read()
 
-
-# reading the file
-file = None
-file_content = ""
-
-try:
-    file = open("hosts.txt", "r")
-    file_content = file.read()
-    file_content = file_content.split("\n")
-    for line in file_content:
-        if line == "":
-            file_content.remove(line)
-    file_content = "\n".join(file_content)
-
-finally:
-    if file is not None:
-       file.close()
+file_content = file_content.split("\n")
+for line in file_content:
+    if line == "":
+        file_content.remove(line)
+file_content = "\n".join(file_content)
 
 
 #making an ip list
@@ -68,10 +60,6 @@ for i,line in enumerate(file_content.split("\n")):
             hostsName.append("Unknown")
 
 
-# removing hosts.txt file
-os.system("rm hosts.txt")
-
-
 
 
 
@@ -79,24 +67,11 @@ os.system("rm hosts.txt")
 # port scan
 #-----------------------------------------------------------------------------#
 
-#fast scan
-    # creating file
-os.system("echo '\t\t-----SCAN RESULTS-----' > tmp_scan_results.txt")
+#complete scan
 
-    # scanning
 results = []
 for ip in hostsIP:
-
-    os.system("sudo nmap -F "+ip+" > tmp_scan_results.txt")
-    file = None
-    try:
-        file = open("tmp_scan_results.txt","r")
-        results.append(file.read())
-    finally:
-        if file is not None:
-            file.close()
-
-os.system("rm tmp_scan_results.txt")
+    results.append(os.popen("sudo nmap -A -T4 -p- "+ip).read())
 
 
 
@@ -122,11 +97,11 @@ file = None
 try:
     file = open(CURRENT_SCAN_PATH+"summary.txt","w")
     file.write("\t\t----- SCAN RESULT SUMMARY -----\n\n\n")
-    file.write("Fast scan : Scans for the 100 most common ports for each detected device (nmap -F)\n\n")
+    file.write("Complete scan : Scans every port with os and service detection (nmap -A -T4 -p-)\n\n")
     file.write("Scan performed at :"+TIME_STAMP.replace("_"," ")+"\n\n")
     file.write(str(len(hostsIP))+" hosts detected :\n")
     for i in range(len(hostsIP)):
-        file.write("\t+ "+hostsIP[i]+" : "+hostsName[i]+"\n")
+        file.write("\t+ "+hostsIP[i]+"\t: "+hostsName[i]+"\n")
     file.write("\n\n\t\t----- END SCAN REPORT -----")
 
 finally:
