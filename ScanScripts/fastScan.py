@@ -9,7 +9,7 @@ import ipcalc
 
 
 
-print("[+] Starting script\n") # remove on raspberry implementation
+print("[+] Starting fast scan script\n") # remove on raspberry implementation
 
 #-----------------------------------------------------------------------------#
 # constants
