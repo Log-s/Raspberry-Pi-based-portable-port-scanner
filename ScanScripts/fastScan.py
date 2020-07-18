@@ -49,8 +49,8 @@ hostsIP = []
 hostsName = []
 
 for i,line in enumerate(hosts_scan.split("\n")):
-    
-    if i%3 == 1 and i != len(hosts_scan.split("\n"))-1 and line.split()[-1][0] != "(":
+
+    if " ".join(line.split()[0:4]) == "Nmap scan report for":
 
         hostsIP.append(line.split()[-1])
 
@@ -61,9 +61,6 @@ for i,line in enumerate(hosts_scan.split("\n")):
                 hostsName.append("Unknown")
         except:
             hostsName.append("Unknown")
-
-
-
 
 
 #-----------------------------------------------------------------------------#
