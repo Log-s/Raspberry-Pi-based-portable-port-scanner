@@ -7,7 +7,7 @@
 import os
 from time import localtime, strftime
 import ipcalc
-
+import subprocess
 
 
 
@@ -19,6 +19,8 @@ print("[+] Starting fast scan script\n") # remove on raspberry implementation
 
 SCAN_PATH = "/home/pi/scanReports/"
 
+SYSTEM_PATH = "/home/pi/SystemScripts/"
+
 TIME_STAMP = strftime("%Y-%m-%d_%H:%M:%S", localtime())
 
 CURRENT_SCAN_PATH = SCAN_PATH+"FAST_SCAN_"+TIME_STAMP+"/"
@@ -27,7 +29,7 @@ localIP = os.popen("sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*  
 NETWORK = str(ipcalc.IP(localIP[0], mask=localIP[1]).guess_network())
 
 
-
+subprocess.Popen(["python3", SYSTEM_PATH+"display_number.py", "-1"])
 
 
 #-----------------------------------------------------------------------------#
@@ -72,11 +74,15 @@ for i,line in enumerate(hosts_scan.split("\n")):
 #fast scan
 print("[+] Starting hosts scan") # remove on raspberry implementation
 
+
 results = []
 for ip in hostsIP:
     print("\t"+str(len(hostsIP)-len(results))+" hosts left") # to replace with a screen display information on the raspberry
+    subprocess.Popen(["python3", SYSTEM_PATH+"display_number.py", str(len(hostsIP)-len(results))])
     results.append(os.popen("sudo nmap -F "+ip).read())
 
+print("clearing")
+subprocess.Popen(["python3", SYSTEM_PATH+"display_number.py", "-1"])
 
 
 
@@ -130,6 +136,7 @@ for i in range (len(hostsIP)):
     finally:
         if file is not None:
             file.close()
+
 
 
 print("[+] Script successfully terminated") # remove on raspberry implementation

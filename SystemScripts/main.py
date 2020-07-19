@@ -65,7 +65,6 @@ while True:
 		ready_process.terminate()
 		scanning_process.terminate()
 		subprocess.Popen(["python3", SYSTEM_PATH+"off_led.py"]) # red led shortly 
-		sleep(2)
 
 		if now-pressed < 3:
 			subprocess.Popen(["python3", SYSTEM_PATH+"shutdown.py"]) # if button pressed for less then 3s, shutdowns the system

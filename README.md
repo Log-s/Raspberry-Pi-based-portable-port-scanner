@@ -7,6 +7,8 @@ Presentation
 -
 I don't think to have a real use of this, since I am not performing *on-site pentesting*, but it still felt like a good idea. I wanted to work on a project hardware related (like using a Raspberry), InfoSec related and with some programming (not only uploading a script on the micro-computer). This seems to check every condition so far. Let's see where it get's me ;-)
 
+**DISCLAIMER :** The number of targets might change from a scan to another on the same network. It's a nmap related issue. Some hosts are not always detected by the preliminary scan, that lists the available hosts.
+
 
 
 Features
@@ -16,7 +18,9 @@ Features
   * *Slow* : Performs an advanced scan, by scanning every port for each device, and by using os and service detection (```nmap -A -T4 -p-```)
 * Working on battery
 * Storing the result in a clean way, to be analysed later on a computer
-* Data visualisation on a web portal
+* Data visualisation in 2 ways :
+  * *raw* : the data is visualized in it's standard format, and accessed via SSH
+  * *on a web interface* : when powerd on, the device runs a local server, which hosts the web interface, diplaying the results
 
 
 LEDs
@@ -53,3 +57,13 @@ There are three buttons, with each a primary functionality, and a secondary func
 Doing it yourself
 -
 Evey necessary file to make this project yourself are available in the ```Ressources``` folder. A detailed tutorial is will be available on my website here : *LINK UNAVAILABLE YET*
+
+
+
+Note to myself
+-
+**Next steps :**
+* Adding a 7 segment display to display the number of hosts left to scan
+* Adding a functionality to juste get the approximative number of targets on the network
+* make it work on battery
+* Working on a web interface to visualize the results
