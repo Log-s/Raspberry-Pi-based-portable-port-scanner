@@ -12,8 +12,8 @@ I don't think to have a real use of this, since I am not performing *on-site pen
 Features
 -
 * Different levels of agressivity (faster : simple results, slower : complexe results)
-  * *Fast* : Performs a basic scan on the 100 most common ports for each device (nmap -F)
-  * *Slow* : Performs an advanced scan, by scanning every port for each device, and by using os and service detection (nmap -A -T4 -p-)
+  * *Fast* : Performs a basic scan on the 100 most common ports for each device (```nmap -F```)
+  * *Slow* : Performs an advanced scan, by scanning every port for each device, and by using os and service detection (```nmap -A -T4 -p-```)
 * Working on battery
 * Storing the result in a clean way, to be analysed later on a computer
 * Data visualisation on a web portal
