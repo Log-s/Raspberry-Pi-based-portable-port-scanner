@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 #-----------------------------------------------------------------------------#
 # library imports
 #-----------------------------------------------------------------------------#
@@ -15,7 +17,7 @@ print("[+] Starting fast scan script\n") # remove on raspberry implementation
 # constants
 #-----------------------------------------------------------------------------#
 
-SCAN_PATH = "../scanReports/"
+SCAN_PATH = "/home/pi/scanReports/"
 
 TIME_STAMP = strftime("%Y-%m-%d_%H:%M:%S", localtime())
 
@@ -105,7 +107,7 @@ try:
     file.write(str(len(hostsIP))+" hosts detected :\n")
     for i in range(len(hostsIP)):
         file.write("\t+ "+hostsIP[i]+"\t: "+hostsName[i]+"\n")
-    file.write("\n\n\t\t----- END SCAN REPORT -----")
+    file.write("\n\n\t\t----- END SCAN REPORT -----\n")
 
 finally:
     if file is not None:

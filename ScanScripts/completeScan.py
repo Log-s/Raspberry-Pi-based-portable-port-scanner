@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 #-----------------------------------------------------------------------------#
 # library imports
 #-----------------------------------------------------------------------------#
@@ -108,7 +110,7 @@ try:
     file.write(str(len(hostsIP))+" hosts detected :\n")
     for i in range(len(hostsIP)):
         file.write("\t+ "+hostsIP[i]+"\t: "+hostsName[i]+"\n")
-    file.write("\n\n\t\t----- END SCAN REPORT -----")
+    file.write("\n\n\t\t----- END SCAN REPORT -----\n")
 
 finally:
     if file is not None:
