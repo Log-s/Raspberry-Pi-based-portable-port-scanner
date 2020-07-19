@@ -1,5 +1,5 @@
 # Raspberry-Pi-based-portable-port-scanner
-This allows to scan ports of devices on a network, by connecting to it via ethernet.
+This device allows you to perform a port scan of every device available on a network you are connected to (Ethernet or WIFI)
 
 
 
@@ -38,15 +38,15 @@ Not there yet ;-)
 Usage
 -
 There are three buttons, with each a primary functionality, and a secondary functionality.
-* Button 1 : 
-  * Simple press : system shutdown (once the red LED is off, you can turn of the powersource)
-  * 3s press : system reboot (don't remove the powersource, and wait for the green LED to turn back on)
+* **Button 1** : 
+  * *Simple press* : system shutdown (once the red LED is off, you can turn of the powersource)
+  * *3s press* : system reboot (don't remove the powersource, and wait for the green LED to turn back on)
 * Button 2 :
-  * Simple press : fast scan
-  * 3s press : identifying the approximate number of targets on the network (displays it)
+  * *Simple press* : fast scan
+  * *3s press* : identifying the approximate number of targets on the network (displays it)
 * Button 3 :
-  * Simple press : complete scan
-  * 3s press : Deleting all scan reports stored on the devices memory
+  * *Simple press* : complete scan
+  * *3s press* : Deleting all scan reports stored on the devices memory
 
 
 
