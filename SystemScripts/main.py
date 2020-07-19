@@ -17,9 +17,8 @@
 
 #importing libraries
 import RPi.GPIO as GPIO
-from time import sleep
+from time import sleep, time
 import subprocess
-
 # setting the GPIO mode
 GPIO.setmode(GPIO.BCM)
 
@@ -57,11 +56,21 @@ while True:
 
 	# checking what action should be made
 	if state_shutdown == False:
+		pressed = time()
+		while state_shutdown == False:
+			state_shutdown = GPIO.input(SHUTDOWN_BUTTON)
+			sleep(0.001)
+		now = time()
+		
 		ready_process.terminate()
 		scanning_process.terminate()
 		subprocess.Popen(["python3", SYSTEM_PATH+"off_led.py"]) # red led shortly 
-		sleep(3)
-		subprocess.Popen(["python3", SYSTEM_PATH+"shutdown.py"])
+		sleep(2)
+
+		if now-pressed < 3:
+			subprocess.Popen(["python3", SYSTEM_PATH+"shutdown.py"]) # if button pressed for less then 3s, shutdowns the system
+		else:
+			subprocess.Popen(["python3", SYSTEM_PATH+"reboot.py"])  # otherwise, reboots the system
 		sleep(SLEEP)
 
 	if (fast_process == 0 and complete_process == 0) or (fast_process == 0 and complete_process != 0 and complete_process.poll() != None) or (fast_process != 0 and complete_process == 0 and fast_process.poll() != None) or (fast_process != 0 and complete_process != 0 and fast_process.poll() != None and complete_process.poll() != None):
@@ -76,7 +85,17 @@ while True:
 
 		if state_complete == False:
 			ready_process.terminate()
-			complete_process = subprocess.Popen(["python3", SCAN_PATH+"completeScan.py"])
+			pressed = time()
+			while state_complete == False:
+				state_complete = GPIO.input(COMPLETE_BUTTON)
+				sleep(0.001)
+			now = time()
+
+			if now-pressed < 2.5:
+				complete_process = subprocess.Popen(["python3", SCAN_PATH+"completeScan.py"]) # if pressed for less then 3s, does a complete scan
+			else:
+				subprocess.Popen(["python3", SYSTEM_PATH+"memoryCleanUp.py"]) # otherwise, deletes all scann files
+				subprocess.Popen(["python3", SYSTEM_PATH+"cleanUp_led.py"])
 			sleep(SLEEP)
 
 	else: # if a scan process is running, blinking green led
