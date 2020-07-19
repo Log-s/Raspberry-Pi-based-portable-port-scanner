@@ -41,10 +41,10 @@ There are three buttons, with each a primary functionality, and a secondary func
 * **Button 1** : 
   * *Simple press* : system shutdown (once the red LED is off, you can turn of the powersource)
   * *3s press* : system reboot (don't remove the powersource, and wait for the green LED to turn back on)
-* Button 2 :
+* **Button 2** :
   * *Simple press* : fast scan
   * *3s press* : identifying the approximate number of targets on the network (displays it)
-* Button 3 :
+* **Button 3** :
   * *Simple press* : complete scan
   * *3s press* : Deleting all scan reports stored on the devices memory
 
