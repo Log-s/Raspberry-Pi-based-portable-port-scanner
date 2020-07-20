@@ -48,6 +48,7 @@ There are three buttons, with each a primary functionality, and a secondary func
 * **Button 2** :
   * *Simple press* : fast scan
   * *3s press* : identifying the approximate number of targets on the network (displays it)
+  * *6s press* : displays the local IP address of the device, to connect to the web interface
 * **Button 3** :
   * *Simple press* : complete scan
   * *3s press* : Deleting all scan reports stored on the devices memory
@@ -64,6 +65,7 @@ Note to myself
 -
 **Next steps :**
 * Adding a 7 segment display to display the number of hosts left to scan
-* Adding a functionality to juste get the approximative number of targets on the network
+* Adding a functionality to just get the approximative number of targets on the network
+* Adding a functionality to diisplay the IP address
 * make it work on battery
 * Working on a web interface to visualize the results
