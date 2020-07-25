@@ -79,7 +79,20 @@ while True:
 
 		if state_fast == False:
 			ready_process.terminate()
-			fast_process = subprocess.Popen(["python3",SCAN_PATH+"fastScan.py"])
+			pressed = time()
+			while state_fast == False:
+				state_fast = GPIO.input(FAST_BUTTON)
+				sleep(0.001)
+			now = time()
+
+			print("coucou 1")
+			if now-pressed < 3:
+				print("coucou 2")
+				fast_process = subprocess.Popen(["python3", SCAN_PATH+"fastScan.py"]) # if pressed for less then 3s, does a fast scan
+			else:
+				print("coucou3")
+				subprocess.Popen(["python3", SCAN_PATH+"getNumberHosts.py"]) # otherwise, deletes all scann files
+				subprocess.Popen(["python3", SYSTEM_PATH+"cleanUp_led.py"])
 			sleep(SLEEP)
 
 		if state_complete == False:

@@ -28,7 +28,6 @@ CURRENT_SCAN_PATH = SCAN_PATH+"FAST_SCAN_"+TIME_STAMP+"/"
 localIP = os.popen("sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*  netmask ([0-9]*\.){3}[0-9]*' | grep -v '127.0.0\.*' | grep -Eo '([0-9]*\.){3}[0-9]*'").read().split("\n")
 NETWORK = str(ipcalc.IP(localIP[0], mask=localIP[1]).guess_network())
 
-
 subprocess.Popen(["python3", SYSTEM_PATH+"display_number.py", "-1"])
 
 
