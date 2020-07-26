@@ -68,6 +68,8 @@ Note to myself
 **Next steps :**
 * Adding a 7 segment display to display the number of hosts left to scan
 * Adding a functionality to just get the approximative number of targets on the network
-* Adding a functionality to diisplay the IP address
 * make it work on battery
 * Working on a web interface to visualize the results
+* Adding a functionality to display the IP address
+* Cleanup the code, because it's messy
+* I know you didn't do that last step, but seriously, CLEAN UP the code
