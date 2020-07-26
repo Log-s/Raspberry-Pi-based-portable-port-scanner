@@ -1,5 +1,5 @@
 """
-ASGI config for data_visualization project.
+ASGI config for DjangoServer project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'data_visualization.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoServer.settings')
 
 application = get_asgi_application()
